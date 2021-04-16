@@ -1,0 +1,61 @@
+{
+    "id": "1617885155192000000",
+    "error": 0,
+    "data": {
+        "ask": {
+            "symbol": "hy",
+            "amount": "24.703980521514309181",
+            "sufficiency": "0.000000000000000000"
+        },
+        "bid": {
+            "symbol": "xrp",
+            "amount": "60.000000",
+            "sufficiency": "0"
+        },
+        "fees": {
+            "symbol": "hy",
+            "allocator": "0.122895045389611308",
+            "network": "0.0020763982024362727"
+        }
+    },
+    "started": 1617885155192,
+    "stopped": 1617885168160,
+    "progress": 1,
+    "timeout": 15000,
+    "cach": []
+}
+
+{
+    "id": "1618256360813000000",
+    "error": 0,
+    "data": {
+        "id": "20e0e7fd5a70622f",
+        "ask": {
+            "symbol": "hy",
+            "amount": "32.838214068146947442",
+            "sufficiency": "0.000000000000000000",
+            "target": "hy:0YkYQMLDofEuxN9xiUYNy8rvCy5iPKayRc5kE1S3d83qpHJUayQLn5gYHK6Ce9ZLZqdQzLA3KURfU49XXMAbWy1",
+            "txid": null
+        },
+        "bid": {
+            "symbol": "xrp",
+            "amount": "60.000000",
+            "sufficiency": "0",
+            "target": "rNqnhhpXAGKKZTpHc6UTgEEYPdQyUCqwAs",
+            "txid": null
+        },
+        "fees": {
+            "symbol": "hy",
+            "allocator": "0.163374172250453760",
+            "network": "0.000005445805741681792"
+        },
+        "type": "autonomous",
+        "creation": "1618256367",
+        "deadline": "1618257087"
+    },
+    "started": 1618256360813,
+    "stopped": 1618256369129,
+    "progress": 1,
+    "timeout": 15000,
+    "cach": []
+}
