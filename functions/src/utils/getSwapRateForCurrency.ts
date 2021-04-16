@@ -39,7 +39,8 @@ async () => {
         const res = await docRef.set(JSON.parse(JSON.stringify(res2)))
         console.log(res2)
         return res
-      } else {
+      } else { 
+          
         const res = await docRef.set(JSON.parse(JSON.stringify({
           lastChangeTimestamp: Date.now() || new Date().getTime(),
         })))
