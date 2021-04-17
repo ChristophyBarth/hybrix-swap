@@ -1,53 +1,52 @@
-const getSwapRateForCurrency = (currency: string) => {
+import axios from 'axios'
+import firebaseAdmin from 'firebase-admin'
 
-};
+export class SwapResponse {
+  id: any
+  error: any
 
-async () => {
-    try {
-      const res1 = await axios.get(
-        'https://swap.hybrix.io/engine/deal/estimate/hy/xrp/',
-      )
+  constructor(data: { id: any; error: any }) {
+    this.id = data.id
+    this.error = data.error
 
-      const processId = res1.data.data
-
-      const res2 = await axios.get(`https://swap.hybrix.io/p/${processId}`)
-
-      const data = res2.data
-
-      const docRef = firebaseAdmin
-        .firestore()
-        .collection('Swap-Rates')
-        .doc('Rates')
-
-      const doc = await docRef.get()
-
-      const docData = doc.data()
-
-      const docDataString = JSON.stringify(docData)
-
-      const dataString = JSON.stringify(data)
-
-      let hasChanged = false
-
-      if (docDataString == dataString) {
-        hasChanged = false
-      } else {
-        hasChanged = true
-      }
-
-      if (hasChanged) {
-        const res = await docRef.set(JSON.parse(JSON.stringify(res2)))
-        console.log(res2)
-        return res
-      } else { 
-          
-        const res = await docRef.set(JSON.parse(JSON.stringify({
-          lastChangeTimestamp: Date.now() || new Date().getTime(),
-        })))
-        return res
-      }
-    } catch (error) {
-      console.error(error)
-      return error
-    }
+    return this
   }
+}
+
+const getSwapRateForCurrency = async (
+  fromCurrency: string,
+  toCurrency: string,
+) => {
+  try {
+    const res1 = (
+      await axios.get(
+        `https://swap.hybrix.io/engine/deal/estimate/${fromCurrency}/${toCurrency}`,
+      )
+    ).data
+
+    const processId = res1.data
+
+    const res2 = (await axios.get(`https://swap.hybrix.io/p/${processId}`)).data
+
+    const doc = await firebaseAdmin
+      .firestore()
+      .collection('Swap-Rates')
+      .add(res2)
+
+    const id = doc.id
+
+    return new SwapResponse({
+      id,
+      error: 0,
+    })
+  } catch (err) {
+    const error = `${err}`;
+
+    return new SwapResponse({
+      id: 0,
+      error,
+    })
+  }
+}
+
+export default getSwapRateForCurrency
