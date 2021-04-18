@@ -1,5 +1,5 @@
 import axios from "axios";
-import firebaseAdmin from "firebase-admin";
+//import firebaseAdmin from "firebase-admin";
 
 export class SwapResponse {
   id: any;
@@ -13,7 +13,7 @@ export class SwapResponse {
   }
 }
 
-const fetchUntillNotNull = (url: string) =>
+/*const fetchUntillNotNull = (url: string) =>
   new Promise(async (resolve) => {
     let res = (await axios.get(url)).data;
 
@@ -27,7 +27,9 @@ const fetchUntillNotNull = (url: string) =>
     };
 
     await reFetch();
-  });
+  });*/
+
+const wait = (mills: number) => new Promise(resolve => setTimeout(resolve, mills));
 
 const getSwapRateForCurrency = async (
   fromCurrency: string,
@@ -36,24 +38,41 @@ const getSwapRateForCurrency = async (
   try {
     const res1 = (
       await axios.get(
-        `https://swap.hybrix.io/engine/deal/estimate/${fromCurrency}/${toCurrency}`
+        `https://swap.hybrix.io/engine/deal/estimate/${fromCurrency}/${toCurrency}/1`
       )
     ).data;
+
+    console.log('response 1: ', res1.data);
 
     const processId = res1.data;
 
     //const res2 = (await axios.get(`https://swap.hybrix.io/p/${processId}`))
       //.data;
 
-    const url = `https://swap.hybrix.io/p/${processId}`;
-    const res2 = (await fetchUntillNotNull(url)) as any;
+    //const url = `https://swap.hybrix.io/p/${processId}`;
+
+    await wait(3500);
+    
+    //let res2 = '' as any;
+
+    /*try {
+      res2 = (await axios.get(url)).data;
+    } catch (e2) {
+      console.error(e2);
+      await wait(3500);
+      res2 = (await axios.get(url)).data;
+    }
+    
+    console.log(res2);
 
     const doc = await firebaseAdmin
       .firestore()
       .collection("Swap-Rates")
       .add(res2);
 
-    const id = doc.id;
+    const id = doc.id;*/
+
+    const id = processId;
 
     return new SwapResponse({
       id,
@@ -61,6 +80,8 @@ const getSwapRateForCurrency = async (
     });
   } catch (err) {
     const error = `${err}`;
+
+    console.error(err);
 
     return new SwapResponse({
       id: 0,
