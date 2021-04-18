@@ -128,6 +128,31 @@ export const getTransactions = functions
     return response;
   });
 
+/**
+ * Creates a new token/asset on the binance blockchain
+ */
 export const issueToken = functions
   .runWith(limits as any)
-  .https.onCall(() => {});
+  .https.onCall(async (data) => {
+    const {
+      tokenName,
+      tokenSymbol,
+      tokenSupply,
+      isMintable,
+      issuersAddress,
+      issuersMnemonic,
+    } = data;
+
+    const issueAsset = require("./callables/issueToken");
+    const isSuccessful = await issueAsset(
+      tokenName,
+      tokenSymbol,
+      tokenSupply,
+      isMintable,
+      issuersAddress,
+      issuersMnemonic
+    );
+    return isSuccessful;
+  });
+
+// testnet
