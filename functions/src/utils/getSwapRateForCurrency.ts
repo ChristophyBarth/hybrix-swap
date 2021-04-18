@@ -32,8 +32,8 @@ export class SwapResponse {
 const wait = (mills: number) => new Promise(resolve => setTimeout(resolve, mills));
 
 const getSwapRateForCurrency = async (
-  fromCurrency: string,
-  toCurrency: string
+  fromCurrency: string = 'xrp',
+  toCurrency: string = 'hy'
 ) => {
   try {
     const res1 = (
