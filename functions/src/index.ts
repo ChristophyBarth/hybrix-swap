@@ -46,7 +46,9 @@ export const createAccount = functions
   .runWith(limits as any)
   .https.onCall(() => {
     const createAccount = require("./callables/createAccount");
-    return createAccount();
+    const account =  createAccount();
+    console.log(account);
+    return account;
   });
 
 /**
