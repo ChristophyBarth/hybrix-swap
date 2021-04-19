@@ -55,16 +55,17 @@ const getSwapRateForCurrency = async (
 
     await wait(3500);
     
-    //let res2 = '' as any;
-    const res2 = (await axios.get(url)).data;
+    let res2 = '' as any;
+    //const res2 = (await axios.get(url)).data;
 
-    /*try {
+    try {
       res2 = (await axios.get(url)).data;
+      if (res2.progress < 1) throw new Error('no progres yet');
     } catch (e2) {
       console.error(e2);
       await wait(3500);
       res2 = (await axios.get(url)).data;
-    }*/
+    }
     
     console.log(res2);
 
