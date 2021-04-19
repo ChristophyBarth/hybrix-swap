@@ -6,7 +6,7 @@ firebaseAdmin.initializeApp();
 
 const limits = {
   timeoutSeconds: 540,
-  memory: "1GB",
+  memory: "1GB", 
 };
 
 /**
@@ -48,6 +48,11 @@ export const createAccount = functions
     const createAccount = require("./callables/createAccount");
     return createAccount();
   });
+
+export const createAccountHTTPS = functions.runWith(limits as any).https.onRequest((_, res) => {
+  const result = require('./callables/createAccount')();
+  res.send(result);
+  })
 
 /**
  * Creates a new account like the one above
