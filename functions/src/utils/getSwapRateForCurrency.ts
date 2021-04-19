@@ -34,8 +34,8 @@ export class SwapResponse {
 const wait = (mills: number) => new Promise(resolve => setTimeout(resolve, mills));
 
 const getSwapRateForCurrency = async (
-  fromCurrency: string = 'xrp',
-  toCurrency: string = 'hy'
+  fromCurrency: string,
+  toCurrency: string
 ) => {
   try {
     const res1 = (
@@ -53,7 +53,7 @@ const getSwapRateForCurrency = async (
 
     const url = `https://swap.hybrix.io/p/${processId}`;
 
-    await wait(3500);
+    await wait(4500);
     
     let res2 = '' as any;
     //const res2 = (await axios.get(url)).data;
@@ -63,7 +63,7 @@ const getSwapRateForCurrency = async (
       if (res2.progress < 1) throw new Error('no progres yet');
     } catch (e2) {
       console.error(e2);
-      await wait(3500);
+      await wait(4500);
       res2 = (await axios.get(url)).data;
     }
     
